@@ -1,1 +1,23 @@
+# Dépôt : MySpace/TemplateRepo
+# Fichier : azure-pipeline.yml
 
+nom : cicd_ci
+
+déclenchement:
+  branches:
+    inclure:
+      - maître
+
+étapes:
+- étape : CI_Checks
+  emplois:
+  - emploi:
+    displayName : yamllint_checks
+    piscine:
+      vmImage : 'ubuntu-dernier'
+    pas:
+    - scénario : |
+        python -m pip install --upgrade pip
+        pip installer yamllint
+        yamllint -d "{extends : détendu, règles : {longueur de ligne : {max : 200}, nouvelle ligne à la fin du fichier : désactiver, nouvelles lignes : désactiver}}" .
+      displayName : « Vérifications des peluches YAML »
