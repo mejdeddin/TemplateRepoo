@@ -1,19 +1,23 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Dépôt : MySpace/TemplateRepo
+# Fichier : azure-pipeline.yml
 
-trigger:
-- main
+nom : cicd_ci
 
-pool:
-  vmImage: ubuntu-latest
+déclenchement:
+  branches:
+    inclure:
+      - maître
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+étapes:
+- étape : CI_Checks
+  emplois:
+  - emploi:
+    displayName : yamllint_checks
+    piscine:
+      vmImage : 'ubuntu-dernier'
+    pas:
+    - scénario : |
+        python -m pip install --upgrade pip
+        pip installer yamllint
+        yamllint -d "{extends : détendu, règles : {longueur de ligne : {max : 200}, nouvelle ligne à la fin du fichier : désactiver, nouvelles lignes : désactiver}}" .
+      displayName : « Vérifications des peluches YAML »
